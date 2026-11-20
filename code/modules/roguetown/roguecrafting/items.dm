@@ -148,42 +148,6 @@
 	tools = list(/obj/item/needle)
 	skillcraft = /datum/skill/craft/sewing
 
-/datum/crafting_recipe/roguetown/survival/bait
-	name = "bait"
-	result = /obj/item/bait
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/wheat = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/sbaita
-	name = "sweetbait (apple)"
-	result = /obj/item/bait/sweet
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/apple = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/sbait
-	name = "sweetbait (berry)"
-	result = /obj/item/bait/sweet
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/bloodbait
-	name = "bloodbait"
-	result = /obj/item/bait/bloody
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/rogue/meat = 2,
-		)
-	subtype_reqs = TRUE
-
 /datum/crafting_recipe/roguetown/survival/pipe
 	name = "wood pipe"
 	result = /obj/item/clothing/mask/cigarette/pipe/crafted
@@ -523,7 +487,7 @@
 		/obj/item/natural/silk = 1,
 		/obj/item/ash = 1)
 	skillcraft = /datum/skill/misc/medicine
-	craftdiff = 2
+	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/ironore
 	name = "iron ore"
@@ -592,3 +556,13 @@
 		)
 	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 4 //Expert
+
+/datum/crafting_recipe/roguetown/survival/head_roguetown_onhelm_tw_d_basic
+	name = "helm's chaperon"
+	result = /obj/item/clothing/head/roguetown/onhelm/tw_d_basic
+	reqs = list(/obj/item/natural/cloth = 3)
+	tools = list(/obj/item/needle)
+	skillcraft = /datum/skill/craft/sewing
+	craftdiff = 2
+	verbage_simple = "sew"
+	verbage = "sews"

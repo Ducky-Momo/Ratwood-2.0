@@ -5,9 +5,8 @@
 	desc = "Composite armour made according to an Etruscan tradition. It's a high-quality arched plate cuirass sewn with dyed leather and fitted with a wide skirt at the bottom to cover the groin."
 	icon_state = "brigandine"
 	blocksound = SOFTHIT
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	armor = ARMOR_BRIGANDINE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
@@ -17,10 +16,16 @@
 	armor_class = ARMOR_CLASS_MEDIUM //good idea suggested by lamaster
 	sleeved_detail = FALSE
 	boobed_detail = FALSE
+	chunkcolor = "#7d9097"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_COAT_STEP)
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/attack_right(mob/user)
 	if(detail_tag)
@@ -37,6 +42,7 @@
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_armor()
+	chunkcolor = pickedcolor
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/update_icon()
 	cut_overlays()
@@ -71,9 +77,8 @@
 	desc = "Composite armour made according to a Heartfelt tradition. It's a high-quality arched plate cuirass sewn with dyed leather and fitted with a wide skirt at the bottom to cover the groin."
 	icon_state = "brigandine2"
 	blocksound = SOFTHIT
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	armor = ARMOR_BRIGANDINE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
@@ -116,7 +121,6 @@
 	blocksound = PLATEHIT
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY
-	peel_threshold = 4
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat
@@ -157,6 +161,7 @@
 	icon_state = "light_brigandine"
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_TORSO
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE - ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
 	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 40
@@ -165,6 +170,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/attack_right(mob/user)
 	if(detail_tag)
@@ -221,7 +227,7 @@
 	blocksound = SOFTHIT
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
-	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	armor = ARMOR_PLATE // Unique armor, uniquely good value coverage.
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // Makes the armor equivilient w/ darkened steel plate.
 	sellprice = 363 // On par w/ judgement and ichor fang cuz why not
 	smelt_bar_num = 2
@@ -247,7 +253,7 @@
 		detail_color = playerchoice
 		detail_tag = "_detail"
 		update_icon()
-		if(loc == user && ishuman(user))
+		if(is_worn_or_stored_by(user) && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_armor()
 			H.update_icon()

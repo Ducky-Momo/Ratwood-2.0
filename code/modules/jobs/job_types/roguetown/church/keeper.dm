@@ -78,6 +78,7 @@
 		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 	)
+	pure_heart = TRUE
 	adv_stat_ceiling = list(STAT_STRENGTH = 6)
 
 /datum/job/roguetown/keeper/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
@@ -119,7 +120,7 @@
 							/obj/item/heart_blood_vial/filled = 2,
 							/obj/item/heart_blood_canister/filled = 1,
 							/obj/item/heart_blood_vial = 5,
-							/obj/item/heart_blood_canister = 1,
+							/obj/item/heart_blood_canister = 4,
 							/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
 							/obj/item/roguekey/keeper = 1,
 							/obj/item/roguekey/keeper_inner = 1,

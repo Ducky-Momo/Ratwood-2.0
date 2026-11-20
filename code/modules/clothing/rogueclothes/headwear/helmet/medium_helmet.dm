@@ -10,7 +10,6 @@
 	sleeved = null
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	clothing_flags = CANT_SLEEP_IN
 	dynamic_hair_suffix = "+generic"
 	bloody_icon_state = "helmetblood"
@@ -24,17 +23,8 @@
 	grid_width = 64
 	experimental_onhip = TRUE
 	experimental_inhand = TRUE
-
-/obj/item/clothing/head/roguetown/helmet/MiddleClick(mob/user)
-	if(!ishuman(user))
-		return
-	if(flags_inv & HIDE_HEADTOP)
-		flags_inv &= ~HIDE_HEADTOP
-	else
-		flags_inv |= HIDE_HEADTOP
-	persist_inv_flags(HIDE_HEADTOP)
-	to_chat(user, span_info("I wear \the [src] [(flags_inv & HIDE_HEADTOP) ? "over" : "under"] my hair."))
-	user.update_inv_head()
+	chunkcolor = "#8c9599"
+	material_category = ARMOR_MAT_LEATHER
 
 /obj/item/clothing/head/roguetown/helmet/getonmobprop(tag)
 	if(tag)
@@ -46,6 +36,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/skullcap
 	name = "skull cap"
@@ -105,6 +96,8 @@
 	desc = "A polished gilbranze helmet which protects the top and sides of the head. ZIZO's glare musn't be interceded when matters of unholy war are at hand. Undead ballistaemen practice a curious method of tying dyed cloth around its rim; can they, too, think and associate?"
 	icon_state = "ancientkettle"
 	smeltresult = /obj/item/ingot/aaslag
+	material_category = ARMOR_MAT_PLATE
+	chunkcolor = "#532e25"
 
 /obj/item/clothing/head/roguetown/helmet/kettle/ancient/decrepit
 	name = "decrepit kettle helmet"
@@ -185,6 +178,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/sallet/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/sallet/iron
 	name = "iron sallet"
@@ -208,6 +202,13 @@
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/ComponentInitialize()
 	..()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/gilded
+	name = "gilded visored sallet"
+	desc = "A steel helmet with gilded trim which protects the ears, nose, and eyes."
+	icon_state = "gildedsallet_visor"
+	item_state = "gildedsallet_visor"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/shadow
 	color = "#323232"
@@ -319,7 +320,7 @@
 	desc = "A helmet of bronze, older-in-design than you could possibly imagine. Mounted to its crest is a decorative sigil that has \
 	sparked scholarly debates for the better part of a millennium; is it a star, a vortex, or the Sun? </br>A notch behind the sigil \
 	allows for the joint mounting of a plume. Nock a feather into it to show off your alliegence's colors."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE - 25 //Close, but no cigar.
 	body_parts_covered = HEAD|HAIR|EARS
 	icon_state = "bronzehelmet"
@@ -358,7 +359,7 @@
 	providing excellent coverage while ensuring one doesn't suffocate on their own adrenal huffs. </br>Out of all actorial labors, none surpass \
 	the reenactment of Ravox's duel against Graggar atop Ur-Syon's ruins - mythologized not as a tentacled star, but as a towering doppelganger-champion; \
 	sculpted by the Archdevil to be the inverse to all who stood for justice and chivalry."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE - 100
 	armor_class = ARMOR_CLASS_LIGHT
 	body_parts_covered = FULL_HEAD
@@ -441,6 +442,7 @@
 /obj/item/clothing/head/roguetown/helmet/otavan/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), HIDEEARS, null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Otavan. Only hides ears when open.
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
@@ -539,6 +541,17 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/ComponentInitialize()
 	..()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/aventail
+	name = "bascinet with aventail"
+	desc = "A steel bascinet helmet, further protected with a thick maille aventail. Burdensome on the shoulders of those not trained to carry \
+	maille, yet excellent in both coverage and durability."
+	icon_state = "aventail"
+	item_state = "aventail"
+	body_parts_covered = HEAD|HAIR|EARS|MOUTH|NECK
+	block2add = FOV_BEHIND
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
@@ -557,6 +570,7 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -589,7 +603,7 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -651,6 +665,7 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -741,6 +756,7 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
 	name = "jingasa"
@@ -789,6 +805,7 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee
 	name = "forester's antler helm"
@@ -822,6 +839,13 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "skullmet_bear"
 
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/rat
+	name = "warden's rouskull helm"
+	desc = "The large, intimidating skull of the rare giant rous, plated with steel on its inner side and given padding - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long sewer dwellers and their descendants."
+	icon = 'icons/roguetown/clothing/special/warden.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
+	icon_state = "skullmet_rat"
+
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf/melee
 	name = "forester's volfskull helm"
 	desc = "The large, intimidating skull of an elusive white volf, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
@@ -835,6 +859,11 @@
 /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear/melee
 	name = "forester's bearskull helm"
 	desc = "The large, intimidating skull of a common direbear, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long hunters and their descendants."
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
+
+/obj/item/clothing/head/roguetown/helmet/sallet/warden/rat/melee
+	name = "forester's rouskull helm"
+	desc = "The large, intimidating skull of the rare giant rous, plated with extra steel reinforcement for front-line combat - paired together with a steel maille mask and worn with a linen shroud. Such trophies are associated with life-long sewer dwellers and their descendants."
 	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON + 50
 
 /obj/item/clothing/head/roguetown/roguehood/warden
@@ -873,7 +902,6 @@
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|NECK
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_STAB)
 	max_integrity = 250
 	smeltresult = /obj/item/ingot/iron
 	dropshrink = null
